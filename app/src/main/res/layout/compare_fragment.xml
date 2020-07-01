@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="compareViewModel"
+            type="com.example.digitalheroes.compare.CompareViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_search_layout"
+        android:orientation="vertical"
+        tools:context=".compare.CompareFragment">
+
+
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/show_sheet_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal|top"-->
+<!--            android:textColor="@color/white"-->
+<!--            style="@style/Widget.AppCompat.Button.Borderless.Colored"-->
+<!--            android:clickable="true"-->
+<!--            android:text="Click to search" />-->
+
+
+        <!--    1st Linear Layout-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/compare_recycler_view1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center" />
+
+
+        </RelativeLayout>
+
+        <!--    2nd Linear Layout-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="0dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/compare_recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center" />
+
+
+        </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/darken1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@drawable/bg_view_dark"/>
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/compareAnimView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:lottie_enableMergePathsForKitKatAndAbove="true" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_color"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="65dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/styling_edit_text"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/pull_me_up"
+                    android:backgroundTint="@color/white"
+                    app:boxBackgroundColor="@color/weak_transparent"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:boxStrokeColor="@color/white" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/compare_hero_edit_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonStyle"
+                    android:id="@+id/compare_hero_button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/enter_first_name"
+                    android:textColor="@color/colorAccent" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonStyle"
+                    android:id="@+id/compare_hero_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:visibility="gone"
+                    android:text="@string/enter_second_name"
+                    android:textColor="@color/white" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

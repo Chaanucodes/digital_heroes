@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Digital Heroes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="search_here">Search Here</string>
+    <string name="about">About</string>
+    <string name="favorites">Favorites (Coming soon)</string>
+    <string name="compare">Compare</string>
+    <string name="show_btm_dialog_text">Tap to search</string>
+    <string name="credits">Made by Pratikshit</string>
+    <string name="current_ver">Version 1.0b</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="additional_creds">(Data provided by Superhero Api)</string>
+    <string name="pull_me_up">Pull me up</string>
+    <string name="enter_first_name">Enter a name and click me</string>
+    <string name="enter_second_name">Enter a name and now click me</string>
+    <string name="search_below">Search below</string>
+    <string name="search_above">Search above</string>
+    <string name="drag_me_down">Drag me down</string>
+    <string name="enter_a_name">Enter a name</string>
+</resources>

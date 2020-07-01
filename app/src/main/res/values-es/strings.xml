@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Digital Heroes</string>
+    <string name="search">Buscar</string>
+    <string name="search_here">Buscar aquí</string>
+    <string name="about">Información</string>
+    <string name="favorites">Destacados (pronto llegará)</string>
+    <string name="compare">Comparar</string>
+    <string name="show_btm_dialog_text">Tocar para buscar</string>
+    <string name="credits">Creador : Pratikshit</string>
+    <string name="current_ver">Versión : 1.0b</string>
+    <string name="additional_creds">(Datos proporcionados por Superheo API)</string>
+    <string name="pull_me_up">Desliza hacia arriba</string>
+    <string name="drag_me_down">Arrastrame hacia abajo</string>
+    <string name="enter_a_name">Ingresa un nombre</string>
+    <string name="enter_second_name">ahora haga clic en mí</string>
+    <string name="enter_first_name">Ingresa un nombre y haga clic en mí</string>
+    <string name="search_below">Busca abajo</string>
+    <string name="search_above">Busca arriba</string>
+</resources>
