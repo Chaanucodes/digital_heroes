@@ -10,20 +10,20 @@ import com.example.digitalheroes.network.SuperImage
 import com.example.digitalheroes.network.SuperStats
 
 @Entity
-data class DatabaseHeroes constructor(
+data class DatabaseHeroes(
     @PrimaryKey
-    val name : String,
-    val id : String,
-    val speed : String,
-    val strength : String,
-    val intelligence : String,
-    val combat : String,
-    val image : String,
-    val publisher : String,
-    val fullName : String,
-    val relatives : String,
-    val height: List<String>,
-    val weight : List<String>
+    val id: String,
+    val name: String,
+    val speed: String,
+    val strength: String,
+    val intelligence: String,
+    val combat: String,
+    val image: String,
+    val publisher: String,
+    val fullName: String,
+    val relatives: String,
+    val height: String,
+    val weight: String
 )
 
 fun List<DatabaseHeroes>.asDomainModel() : List<SuperHeroPieces>{
@@ -35,7 +35,7 @@ fun List<DatabaseHeroes>.asDomainModel() : List<SuperHeroPieces>{
             image = SuperImage(it.image),
             biography = SuperBioPieces(it.publisher, it.fullName),
             connections = SuperConnection(it.relatives),
-            appearance = SuperAppearance(it.height, it.weight)
+            appearance = SuperAppearance(listOf(it.height), listOf("",it.weight))
         )
     }
 }

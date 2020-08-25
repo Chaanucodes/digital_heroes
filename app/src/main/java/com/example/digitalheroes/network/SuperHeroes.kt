@@ -1,14 +1,15 @@
 package com.example.digitalheroes.network
 
 import com.example.digitalheroes.database.DatabaseHeroes
-import com.example.digitalheroes.domain.SuperBioPieces
 import com.squareup.moshi.Json
-import java.net.ProtocolFamily
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class SuperHeroesList(
     val results : List<SuperHeroes>
 )
 
+@JsonClass(generateAdapter = true)
 data class SuperHeroes(
     val name : String,
     val id : String,
@@ -62,8 +63,8 @@ fun SuperHeroesList.asDatabaseModel() : List<DatabaseHeroes>{
             publisher = it.biography.publisher,
             fullName = it.biography.fullName,
             relatives = it.connections.relatives,
-            height = it.appearance.height,
-            weight = it.appearance.weight
+            height = it.appearance.height[0],
+            weight = it.appearance.weight[1]
         )
     }
 }

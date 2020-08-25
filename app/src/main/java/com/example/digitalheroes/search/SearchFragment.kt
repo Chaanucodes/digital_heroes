@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -26,14 +27,14 @@ class SearchFragment : Fragment() {
 
     private val sharedPrefFileName = "com.example.digitalheroes"
     private val keyH = "SJO00"
-    private val searchViewModel : SearchViewModel by lazy {
+    private val searchViewModel: SearchViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
         ViewModelProviders.of(this, SearchViewModel.Factory(activity.application))
             .get(SearchViewModel::class.java)
     }
-    private var adapter : HeroListAdapter? = null
+    private var adapter: HeroListAdapter? = null
     private lateinit var binding: FragmentSearchBinding
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -48,20 +49,24 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding  = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_search, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_search, container, false
+        )
 
 
         // Implementing ViewModel
-//        searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
         binding.viewModelInXml = searchViewModel
 
 
+        // Shared Preferences
         var bol = true
-        val sharedPreferences = activity!!.getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE)
         bol = sharedPreferences.getBoolean(keyH, true)
-        if (bol){
+        if (bol) {
             callTheFragment(DialogSwipeFragment())
+            binding.searchHeroEditText.setText("Batman")
+            buttonAction()
             Log.i("Do bar", "Dos bars")
         }
 
@@ -93,8 +98,8 @@ class SearchFragment : Fragment() {
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(MarginPageTransformer(40))
         compositePageTransformer.addTransformer { view: View, fl: Float ->
-            val r = 1- abs(fl)
-            view.scaleY =  r
+            val r = 1 - abs(fl)
+            view.scaleY = r
         }
         binding.recyclerView.setPageTransformer(compositePageTransformer)
 
@@ -104,9 +109,6 @@ class SearchFragment : Fragment() {
         }
 
         // Observer(s)
-        searchViewModel.heroList.observe(viewLifecycleOwner, Observer {
-            adapter?.submitList(it)
-        })
 
         searchViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
             binding.recyclerView.visibility = if (it) View.VISIBLE else View.GONE
@@ -115,28 +117,35 @@ class SearchFragment : Fragment() {
         searchViewModel.loadingStatus.observe(viewLifecycleOwner, Observer {
             when (it) {
                 LoadStatus.NOT_FOUND -> {
+//                    if (binding.animView.isAnimating) {
+//                        binding.animView.pauseAnimation()
+//                    }
+//                    if (binding.animView.visibility == View.GONE)
+//                        binding.animView.visibility = View.VISIBLE
+//                    binding.animView.setAnimation(R.raw.notfound)
+//                    binding.animView.playAnimation()
+//                    binding.animView.setMaxFrame(180)
+//                    binding.animView.repeatCount = 0
+                    Toast.makeText(activity, "NOT FOUND!!", Toast.LENGTH_SHORT).apply {
+                        setGravity(Gravity.CENTER, 0, 0)
+                        show()
+                    }
                     if (binding.animView.isAnimating) {
                         binding.animView.pauseAnimation()
                     }
-                    if (binding.animView.visibility == View.GONE)
-                        binding.animView.visibility = View.VISIBLE
-                    binding.animView.setAnimation(R.raw.notfound)
-                    binding.animView.playAnimation()
-                    binding.animView.setMaxFrame(180)
-                    binding.animView.repeatCount = 0
                 }
 
-                LoadStatus.ERROR -> {
-                    if (binding.animView.isAnimating) {
-                        binding.animView.pauseAnimation()
-                    }
-                    if (binding.animView.visibility == View.GONE)
-                        binding.animView.visibility = View.VISIBLE
-                    binding.animView.setAnimation(R.raw.noconnection)
-                    binding.animView.playAnimation()
-                    binding.animView.setMaxFrame(150)
-                    binding.animView.repeatCount = 0
-                }
+//                LoadStatus.ERROR -> {
+//                    if (binding.animView.isAnimating) {
+//                        binding.animView.pauseAnimation()
+//                    }
+//                    if (binding.animView.visibility == View.GONE)
+//                        binding.animView.visibility = View.VISIBLE
+//                    binding.animView.setAnimation(R.raw.noconnection)
+//                    binding.animView.playAnimation()
+//                    binding.animView.setMaxFrame(150)
+//                    binding.animView.repeatCount = 0
+//                }
 
                 LoadStatus.LOADING -> {
                     if (binding.animView.isAnimating) {
@@ -154,7 +163,7 @@ class SearchFragment : Fragment() {
                     if (binding.animView.isAnimating) {
                         binding.animView.pauseAnimation()
                     }
-                    if (binding.animView.visibility == View.VISIBLE)
+                    if (binding.animView.visibility != View.GONE)
                         binding.animView.visibility = View.GONE
                 }
             }
@@ -174,8 +183,10 @@ class SearchFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item!!,
-            view!!.findNavController())
+        return NavigationUI.onNavDestinationSelected(
+            item!!,
+            requireView().findNavController()
+        )
                 || super.onOptionsItemSelected(item)
     }
 
@@ -187,9 +198,8 @@ class SearchFragment : Fragment() {
     }
 
 
-
-    private fun callTheFragment(dialogFragment: DialogFragment){
-        val fragmentManager = activity!!.supportFragmentManager
+    private fun callTheFragment(dialogFragment: DialogFragment) {
+        val fragmentManager = requireActivity().supportFragmentManager
 
         val transaction = fragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -203,9 +213,10 @@ class SearchFragment : Fragment() {
     private fun buttonAction() {
         val s = binding.searchHeroEditText.text.toString().trim()
 
-        if (s.isNotEmpty()){
+        if (s.isNotEmpty()) {
             searchViewModel.refreshDataFromRepository(s)
-            val mgr = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val mgr =
+                activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             mgr.hideSoftInputFromWindow(binding.searchHeroEditText.windowToken, 0)
         }
     }
